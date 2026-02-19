@@ -16,6 +16,19 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // MUST be first
 app.use(express.json());
+// 🔥 handle preflight in Express 5
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+    );
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 connectDatabase();
 
