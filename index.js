@@ -6,7 +6,14 @@ const path = require("path");
 const cors = require("cors");
 dotenv.config({ path: path.join(__dirname, "config/config.env") });
 const connectDatabase = require("./config/connectDB");
-app.use(cors());
+app.options("*", cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 
 connectDatabase();
 
